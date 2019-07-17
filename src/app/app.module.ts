@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, HelloWorldComponent, HelloWorldContainer],
-  imports: [BrowserModule, DashboardModule, BrowserAnimationsModule],
+  imports: [BrowserModule, BrowserAnimationsModule, DashboardModule],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [HelloWorldContainer],
