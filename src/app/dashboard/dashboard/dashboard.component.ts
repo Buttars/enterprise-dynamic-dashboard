@@ -8,7 +8,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Track } from '../models/track';
-import { DashboardOutletDirective } from 'src/app/dashboard-outlet.directive';
+import { DashboardOutletDirective } from '../dashboard-outlet.directive';
 import { Item } from '../models/item';
 import { dashboardCards } from '../dashboard-cards';
 import { DashboardCardContainer } from '../dashboard-card/dashboard-card.container';

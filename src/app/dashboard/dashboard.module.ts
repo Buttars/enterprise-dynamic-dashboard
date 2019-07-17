@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DashboardOutletDirective } from '../dashboard-outlet.directive';
+import { DashboardOutletDirective } from './dashboard-outlet.directive';
 import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
 import { DashboardCardContainer } from './dashboard-card/dashboard-card.container';
 import { MatCardModule } from '@angular/material';
