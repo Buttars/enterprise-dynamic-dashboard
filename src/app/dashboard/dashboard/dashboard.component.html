@@ -1,1 +1,7 @@
-<div class="board"></div>
+<div class="board">
+  <div *ngFor="let track of tracks">
+    <div *ngFor="let item of track.items">
+      {{ item.id }}
+    </div>
+  </div>
+</div>
