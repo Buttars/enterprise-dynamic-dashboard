@@ -7,12 +7,16 @@ import {
   ComponentFactoryResolver,
   AfterViewInit,
 } from '@angular/core';
+
+import { tap } from 'rxjs/operators';
+
 import { Track } from '../models/track';
 import { DashboardOutletDirective } from '../dashboard-outlet.directive';
 import { Item } from '../models/item';
 import { dashboardCards } from '../dashboard-cards';
 import { DashboardCardContainer } from '../dashboard-card/dashboard-card.container';
 import { DashboardCards } from '../dashboard-cards.enum';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,28 +26,25 @@ import { DashboardCards } from '../dashboard-cards.enum';
 export class DashboardComponent implements OnInit, AfterViewInit {
   @ViewChildren(DashboardOutletDirective) dashboardOutlet: QueryList<DashboardOutletDirective>;
 
-  tracks: Array<Track> = [
-    {
-      items: [
-        {
-          component: DashboardCards.HELLO_WORLD,
-          id: 'hello-world',
-        },
-      ],
-    },
-    {
-      items: [
-        {
-          component: DashboardCards.HELLO_WORLD,
-          id: 'hello-world-2',
-        },
-      ],
-    },
-  ];
+  tracks: Array<Track> = [];
 
-  constructor(private cd: ChangeDetectorRef, private cfr: ComponentFactoryResolver) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    private cfr: ComponentFactoryResolver,
+    private dashboardService: DashboardService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.dashboardService.tracks$
+      .pipe(
+        tap(tracks => (this.tracks = tracks))
+        /* Make sure to unsubscribe! */
+      )
+      .subscribe(() => {
+        this.cd.detectChanges();
+        this.loadContents();
+      });
+  }
 
   ngAfterViewInit() {
     this.loadContents();
@@ -72,5 +73,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     const componentRef = viewContainerRef.createComponent(componentFactory);
     const instance = componentRef.instance as DashboardCardContainer;
     instance.item = item;
+  };
+
+  changed = (items: Array<Item>, trackIndex: number) => {
+    const state = this.tracks;
+    state[trackIndex].items = items as Array<Item>;
+    this.dashboardService.setState(state);
   };
 }

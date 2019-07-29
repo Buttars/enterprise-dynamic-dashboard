@@ -1,9 +1,11 @@
 <div class="board">
-  <div *ngFor="let track of tracks">
-    <div *ngFor="let item of track.items">
-      <mat-card style="margin: 1rem;">
-        <ng-template appDashboardOutlet [item]="item"></ng-template>
-      </mat-card>
+  <div *ngFor="let track of tracks; let i = index">
+    <div dragula="dashboard" [dragulaModel]="track.items" (dragulaModelChange)="changed($event, i)" class="tracks">
+      <div *ngFor="let item of track.items">
+        <mat-card style="margin: 1rem;">
+          <ng-template appDashboardOutlet [item]="item"></ng-template>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>
